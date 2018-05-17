@@ -8,6 +8,7 @@ import (
        "os"
        "os/signal"
        "syscall"
+       "time"
        "net/http"
        "io/ioutil"
        "encoding/json"
@@ -40,6 +41,9 @@ func main() {
 
      // Register a function to handle message events
      discord.AddHandler(messageCreate)
+
+     // Register a function to handle ready events
+     discord.AddHandler(ready)
 
      // Open a websocket connection to Discord
      err = discord.Open()
@@ -96,6 +100,19 @@ func getSuperNtJailbreak() string {
      }
 
      return buffer.String()
+}
+
+func ready(s *discordgo.Session, r *discordgo.Ready) {
+//     s.ChannelMessageSend(m.ChannelID, "SPAM")
+     ticker := time.NewTicker(5 * time.Minute)
+     for {
+       select {
+         case <- ticker.C:
+	   superNT := getSuperNtJailbreak()
+           fmt.Println(superNT)
+	   s.ChannelMessageSend("446490232116871201", superNT)
+        }
+     }
 }
 
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
