@@ -110,7 +110,7 @@ func getSuperNtJailbreak() string {
 	 if err != nil {
 	   fmt.Println("Error writing to file superNtJb.out")
 	 }
-         buffer.WriteString("Latest SuperNT Jailbreak: ")
+         buffer.WriteString("@here Latest SuperNT Jailbreak: ")
          buffer.WriteString(latest)
          buffer.WriteString("\n\n")
          buffer.WriteString(result["url"].(string))
@@ -158,11 +158,11 @@ func ready(s *discordgo.Session, r *discordgo.Ready) {
 	   phoebe := getGDEmu("phoebe")
 	   docbrown := getGDEmu("docbrown")
 
-	   s.ChannelMessageSend("446490232116871201", superNT)
-	   s.ChannelMessageSend("446490232116871201", gdEmu)
-	   s.ChannelMessageSend("446490232116871201", rhea)
-	   s.ChannelMessageSend("446490232116871201", phoebe)
-	   s.ChannelMessageSend("446490232116871201", docbrown)
+	   s.ChannelMessageSend("371736950664724480", superNT)
+	   s.ChannelMessageSend("371726627044065291", gdEmu)
+	   s.ChannelMessageSend("371726627044065291", rhea)
+	   s.ChannelMessageSend("371726627044065291", phoebe)
+	   s.ChannelMessageSend("371726627044065291", docbrown)
 	   fmt.Println(gdEmu)
         }
      }
