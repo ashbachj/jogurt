@@ -162,7 +162,7 @@ func ready(s *discordgo.Session, r *discordgo.Ready) {
 	   s.ChannelMessageSend("371726627044065291", gdEmu)
 	   s.ChannelMessageSend("371726627044065291", rhea)
 	   s.ChannelMessageSend("371726627044065291", phoebe)
-	   s.ChannelMessageSend("371726627044065291", docbrown)
+	   s.ChannelMessageSend("371728511691653120", docbrown)
 	   fmt.Println(gdEmu)
         }
      }
