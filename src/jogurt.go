@@ -62,15 +62,20 @@ func main() {
 
 func getURL(url string) []uint8 {
      resp, err := http.Get(url)
+     var body []uint8
      if err != nil {
      	fmt.Println("Error getting latest release", err)
+	body = []uint8{0}
+	return body
      }
      
      defer resp.Body.Close()
-     body, err := ioutil.ReadAll(resp.Body)
+     body, err = ioutil.ReadAll(resp.Body)
 
      if err != nil {
      	fmt.Println("Error reading response body", err)
+	body = []uint8{0}
+	return body
      }
 
      return body
@@ -112,7 +117,11 @@ func getSuperNtJailbreak() string {
     url := "https://api.github.com/repos/SmokeMonsterPacks/Super-NT-Jailbreak/releases/latest"
 
     body := getURL(url)
-
+    if (len(body) <= 1) {
+      fmt.Println("Error getting url")
+      fmt.Println(url)
+      return ""
+    }
     result := make(map[string]interface{})
     json.Unmarshal(body, &result)
 
