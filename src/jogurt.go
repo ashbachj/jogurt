@@ -90,6 +90,21 @@ func readOutFile(filename string) string {
     return previous
 }
 
+func getRecentSuperNT() string {
+     var previous string
+     var buffer bytes.Buffer
+
+     url := "https://github.com/SmokeMonsterPacks/Super-NT-Jailbreak/releases"
+     previous = readOutFile("superNtJb.out")
+
+     buffer.WriteString("Latest version is ")
+     buffer.WriteString(previous)
+     buffer.WriteString("\n\n")
+     buffer.WriteString(url)
+
+     return buffer.String()
+}
+
 func getSuperNtJailbreak() string {
     var buffer bytes.Buffer
     var previous string
@@ -179,7 +194,9 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
        case "!truth": 
           s.ChannelMessageSend(m.ChannelID, "Sega is better than Nintendo")
        case "!superNT": 
-          superNT := getSuperNtJailbreak()
+          superNT := getRecentSuperNT()
           s.ChannelMessageSend(m.ChannelID, superNT)	
+       default: 
+          fmt.Println(m.Content)
      }
 }
