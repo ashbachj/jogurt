@@ -174,13 +174,12 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
      	return
      }
 
-     superNT := getSuperNtJailbreak()
-
+     switch m.Content {
      // If message is !truth, tell the truth
-     if m.Content == "!truth" {
+       case "!truth": 
           s.ChannelMessageSend(m.ChannelID, "Sega is better than Nintendo")
-	  if (strings.Compare(superNT, "") != 0) {
-	    s.ChannelMessageSend(m.ChannelID, superNT)
-	  }
+       case "!superNT": 
+          superNT := getSuperNtJailbreak()
+          s.ChannelMessageSend(m.ChannelID, superNT)	
      }
 }
