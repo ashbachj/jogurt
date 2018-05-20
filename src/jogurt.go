@@ -12,6 +12,7 @@ import (
        "net/http"
        "io/ioutil"
        "encoding/json"
+       "math/rand"
 
        "github.com/bwmarrin/discordgo"
 )
@@ -32,6 +33,7 @@ func init() {
 
 func main() {
      discord, err := discordgo.New("Bot " + Token)
+     rand.Seed(time.Now().UTC().UnixNano())
 
      if err != nil {
      	fmt.Println("Error establishing session!", err)
@@ -113,6 +115,10 @@ func getRecentSuperNT() string {
 func getSuperNtJailbreak() string {
     var buffer bytes.Buffer
     var previous string
+    if (rand.Float64() < 0.8) {
+      fmt.Println("Don't spam github")
+      return ""
+    }
      
     url := "https://api.github.com/repos/SmokeMonsterPacks/Super-NT-Jailbreak/releases/latest"
 
@@ -127,7 +133,14 @@ func getSuperNtJailbreak() string {
 
     previous = readOutFile("superNtJb.out")
 
-    latest := result["tag_name"].(string)
+    tag := result["tag_name"]
+    if tag == nil {
+       fmt.Println("Error reading results")
+       fmt.Println(result)
+       return buffer.String()
+    }
+
+    latest := tag.(string)
 
     if (strings.Compare(previous, latest) != 0) {
          err := ioutil.WriteFile("superNtJb.out", []byte(latest), 0644)
@@ -163,6 +176,7 @@ func getGDEmu(oem string) string {
       orderOpen = append(orderOpen, url)
       
       buffer = strings.Join(orderOpen, "")
+      fmt.Println(latest)
     } else {
       fmt.Println(oem)
       fmt.Println("Preorders closed")
@@ -184,10 +198,22 @@ func ready(s *discordgo.Session, r *discordgo.Ready) {
 
 	   s.ChannelMessageSend("371736950664724480", superNT)
 	   s.ChannelMessageSend("371726627044065291", gdEmu)
+	   if gdEmu != "" {
+	     time.Sleep(1 * time.Hour)
+	   }
 	   s.ChannelMessageSend("371726627044065291", rhea)
+	   if rhea != "" {
+	     time.Sleep(1 * time.Hour)
+	   }
 	   s.ChannelMessageSend("371726627044065291", phoebe)
+	   if phoebe != "" {
+	     time.Sleep(1 * time.Hour)
+	   }
 	   s.ChannelMessageSend("371728511691653120", docbrown)
-	   fmt.Println(gdEmu)
+	   if docbrown != "" {
+	     time.Sleep(3 * time.Hour)
+	   }
+
         }
      }
 }
