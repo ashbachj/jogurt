@@ -169,7 +169,7 @@ func getGDEmu(oem string) string {
 
     latest := string(body)
 
-    if (strings.Contains(latest, "Preorders are currently closed") == false) {
+    if (strings.Contains(latest, "paypalemail' class='grunion-field-label email'>PayPal email<span>(required)</span>") == true) {
       orderOpen = append(orderOpen, "@here ")
       orderOpen = append(orderOpen, oem)
       orderOpen = append(orderOpen, " order page is open. Act fast!!\n\n")
@@ -185,37 +185,39 @@ func getGDEmu(oem string) string {
     return buffer
 }
 
+func waitUntilAligned(align time.Duration) {
+  d := time.Until(time.Now().Add(align).Truncate(align))
+  time.Sleep(d)
+}
+
 func ready(s *discordgo.Session, r *discordgo.Ready) {
-     ticker := time.NewTicker(3 * time.Minute)
-     for {
-       select {
-         case <- ticker.C:
-	   superNT := getSuperNtJailbreak()
-	   gdEmu := getGDEmu("gdemu")
-	   rhea := getGDEmu("rhea")
-	   phoebe := getGDEmu("phoebe")
-	   docbrown := getGDEmu("docbrown")
+  for {
+    waitUntilAligned(3 * time.Minute)
+    fmt.Println(time.Now())
+    superNT := getSuperNtJailbreak()
+    gdEmu := getGDEmu("gdemu")
+    rhea := getGDEmu("rhea")
+    phoebe := getGDEmu("phoebe")
+    docbrown := getGDEmu("docbrown")
 
-	   s.ChannelMessageSend("371736950664724480", superNT)
-	   s.ChannelMessageSend("371726627044065291", gdEmu)
-	   if gdEmu != "" {
-	     time.Sleep(1 * time.Hour)
-	   }
-	   s.ChannelMessageSend("371726627044065291", rhea)
-	   if rhea != "" {
-	     time.Sleep(1 * time.Hour)
-	   }
-	   s.ChannelMessageSend("371726627044065291", phoebe)
-	   if phoebe != "" {
-	     time.Sleep(1 * time.Hour)
-	   }
-	   s.ChannelMessageSend("371728511691653120", docbrown)
-	   if docbrown != "" {
-	     time.Sleep(3 * time.Hour)
-	   }
-
-        }
-     }
+    s.ChannelMessageSend("446490232116871201", superNT)
+    s.ChannelMessageSend("446490232116871201", gdEmu)
+    if gdEmu != "" {
+      time.Sleep(1 * time.Hour)
+    }
+    s.ChannelMessageSend("446490232116871201", rhea)
+    if rhea != "" {
+      time.Sleep(1 * time.Hour)
+    }
+    s.ChannelMessageSend("446490232116871201", phoebe)
+    if phoebe != "" {
+      time.Sleep(1 * time.Hour)
+    }
+    s.ChannelMessageSend("446490232116871201", docbrown)
+    if docbrown != "" {
+      time.Sleep(3 * time.Hour)
+    }
+  }
 }
 
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
